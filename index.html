@@ -43,7 +43,7 @@
   </header>
 
   <div class="card">
-    <h2>🔗 ghlink <span class="badge b-ver">v0.4.7</span></h2>
+    <h2>🔗 ghlink <span class="badge b-ver" id="ghlink-ver">v0.4.7</span></h2>
     <p class="desc">GitHub 链路自愈工具：主动监控 GitHub 连通性，异常时自动获取新 IP 写入 hosts，自检回滚 + 多渠道告警。跨平台（Windows / macOS / Linux），核心零依赖。</p>
     <div class="badges">
       <span class="badge b-win">Windows</span>
@@ -72,7 +72,7 @@ sudo apt install ghlink</pre>
 
     <div class="links">
       <a href="https://github.com/liwmj/ghlink">GitHub 仓库</a>
-      <a href="https://github.com/liwmj/ghlink/releases/tag/v0.4.7">Release v0.4.7</a>
+      <a href="https://github.com/liwmj/ghlink/releases/tag/v0.4.7" id="ghlink-release">Release v0.4.7</a>
       <a href="https://github.com/liwmj/ghlink/blob/master/README.md">文档</a>
       <a href="https://github.com/liwmj/ghlink/issues">反馈</a>
     </div>
@@ -85,5 +85,23 @@ sudo apt install ghlink</pre>
 
   <footer>© 2026 liwmj · GitHub Pages 静态分发 · 由 Jekyll 构建</footer>
 </div>
+<script>
+// 方案 A：动态拉取最新 Release（GitHub API，无 token 60 次/时/IP，个人站够用）
+async function refreshGhlink() {
+  try {
+    const r = await fetch('https://api.github.com/repos/liwmj/ghlink/releases/latest');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    const ver = document.getElementById('ghlink-ver');
+    const rel = document.getElementById('ghlink-release');
+    if (ver && d.tag_name) ver.textContent = d.tag_name;
+    if (rel && d.html_url) { rel.textContent = 'Release ' + d.tag_name; rel.href = d.html_url; }
+  } catch (e) {
+    // 拉取失败保持静态默认值（v0.4.7），不阻塞页面
+    console.warn('ghlink release fetch failed:', e);
+  }
+}
+refreshGhlink();
+</script>
 </body>
 </html>
