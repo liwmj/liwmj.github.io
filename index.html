@@ -67,7 +67,7 @@ sudo apt install ghlink</pre>
 
     <div class="install">
       <div class="os">🪟 Windows（安装向导）</div>
-      <pre>下载 ghlink-installer-v0.4.7.exe 并运行（含托盘 GUI）</pre>
+      <pre id="ghlink-win">下载 ghlink-installer-v0.4.7.exe 并运行（含托盘 GUI）</pre>
     </div>
 
     <div class="links">
@@ -94,8 +94,10 @@ async function refreshGhlink() {
     const d = await r.json();
     const ver = document.getElementById('ghlink-ver');
     const rel = document.getElementById('ghlink-release');
+    const win = document.getElementById('ghlink-win');
     if (ver && d.tag_name) ver.textContent = d.tag_name;
     if (rel && d.html_url) { rel.textContent = 'Release ' + d.tag_name; rel.href = d.html_url; }
+    if (win && d.tag_name) win.textContent = '下载 ghlink-installer-' + d.tag_name + '.exe 并运行（含托盘 GUI）';
   } catch (e) {
     // 拉取失败保持静态默认值（v0.4.7），不阻塞页面
     console.warn('ghlink release fetch failed:', e);
