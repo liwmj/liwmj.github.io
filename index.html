@@ -118,9 +118,13 @@
   .links a:hover { color: var(--accent2); text-shadow: 0 0 12px var(--glow); }
   .links a svg { width: 14px; height: 14px; fill: currentColor; }
 
-  /* ghlink 安装源 */
-  .install-block { margin: 4px 0 12px; border-radius: 12px; background: rgba(5,8,20,.6); border: 1px solid var(--card-border); overflow: hidden; }
-  .install-tab { display: flex; border-bottom: 1px solid var(--card-border); }
+  /* ghlink 安装源（可折叠） */
+  .install-details { margin: 4px 0 12px; border-radius: 12px; background: rgba(5,8,20,.6); border: 1px solid var(--card-border); overflow: hidden; }
+  .install-details summary { cursor: pointer; padding: 8px 14px; font-size: .8rem; color: var(--accent); list-style: none; user-select: none; transition: background .2s; }
+  .install-details summary:hover { background: rgba(110,168,255,.08); }
+  .install-details summary::after { content: " ▾"; opacity: .6; }
+  .install-details[open] summary::after { content: " ▴"; }
+  .install-tab { display: flex; border-top: 1px solid var(--card-border); }
   .install-tab button {
     flex: 1; background: none; border: none; color: var(--muted); cursor: pointer;
     padding: 8px 4px; font-size: .8rem; font-family: inherit;
@@ -165,7 +169,7 @@
   <main class="grid">
 
     <!-- ============ ghlink ============ -->
-    <article class="card" data-repo="ghlink" data-fallback-ver="v0.4.15" data-lang="Python" style="--lang:#3572A5; grid-column: 1 / -1;">
+    <article class="card" data-repo="ghlink" data-fallback-ver="v0.4.15" data-lang="Python" style="--lang:#3572A5;">
       <div class="card-top">
         <span class="lang-dot"></span>
         <h2><a href="https://github.com/liwmj/ghlink" target="_blank" rel="noopener">🔗 ghlink</a></h2>
@@ -178,7 +182,7 @@
         <span>🕒 <b id="pushed-ghlink">—</b></span>
         <span>Python</span>
       </div>
-      <div class="install-block">
+      <details class="install-details">
         <div class="install-tab">
           <button class="active" data-os="mac">🍎 macOS / Homebrew</button>
           <button data-os="linux">🐧 Linux / apt</button>
@@ -192,7 +196,7 @@ sudo apt update
 sudo apt install ghlink</pre>
           <pre id="install-win" style="display:none">下载 ghlink-installer-v0.4.15.exe 并运行（含托盘 GUI）</pre>
         </div>
-      </div>
+      </details>
       <div class="links">
         <a href="https://github.com/liwmj/ghlink" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
         <a href="https://github.com/liwmj/ghlink/releases" target="_blank" rel="noopener" id="rel-ghlink">Release v0.4.15</a>
