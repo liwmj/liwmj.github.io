@@ -8,12 +8,12 @@
 <meta name="keywords" content="liwmj,ghlink,openclaw-gh-sync,GreenLeaf,green_pythoncpp,green_luacpp,green_vim_switchtoinc,开源">
 <style>
   :root {
-    --bg0: #05060f;
-    --bg1: #0b0e1f;
-    --card: rgba(20, 24, 46, 0.62);
+    --bg0: #04050d;
+    --bg1: #0a0d1f;
+    --card: rgba(18, 22, 44, 0.6);
     --card-border: rgba(120, 140, 255, 0.16);
-    --text: #e6e9ff;
-    --muted: #8b91b8;
+    --text: #e8ebff;
+    --muted: #8f95bd;
     --accent: #6ea8ff;
     --accent2: #a78bfa;
     --accent3: #34d399;
@@ -23,9 +23,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
-    background: radial-gradient(1200px 600px at 80% -10%, rgba(110,168,255,.14), transparent 60%),
-                radial-gradient(900px 500px at 10% 10%, rgba(167,139,250,.12), transparent 55%),
-                linear-gradient(180deg, var(--bg0), var(--bg1) 40%, #070818);
+    background: var(--bg0);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     line-height: 1.65;
@@ -34,75 +32,177 @@
   }
   #bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 
-  .wrap { position: relative; z-index: 1; max-width: 1080px; margin: 0 auto; padding: 40px 24px 60px; }
+  .wrap { position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 0 24px 60px; }
 
   /* ============ Hero ============ */
-  .hero { text-align: center; padding: 56px 0 40px; }
-  .logo {
-    width: 84px; height: 84px; margin: 0 auto 22px;
-    border-radius: 24px;
-    background: linear-gradient(135deg, #1a2148, #12142e);
-    border: 1px solid var(--card-border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2.4rem; font-weight: 800;
-    color: var(--accent);
-    box-shadow: 0 0 40px var(--glow), inset 0 0 24px rgba(110,168,255,.12);
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 84px 0 56px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute; inset: -10% -20% 0;
+    background:
+      radial-gradient(700px 380px at 50% -10%, rgba(110,168,255,.28), transparent 70%),
+      radial-gradient(500px 300px at 15% 20%, rgba(167,139,250,.16), transparent 65%),
+      radial-gradient(500px 300px at 85% 15%, rgba(52,211,153,.12), transparent 65%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; left: 50%; top: -40px; transform: translateX(-50%);
+    width: 120%; height: 520px;
+    background-image:
+      linear-gradient(rgba(110,168,255,.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(110,168,255,.07) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 80% at 50% 30%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 60% 80% at 50% 30%, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+  .avatar {
+    position: relative;
+    width: 104px; height: 104px; margin: 0 auto 26px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
+    box-shadow: 0 0 50px rgba(110,168,255,.35);
     animation: float 5s ease-in-out infinite;
   }
-  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .avatar img {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: #0d1024;
+    display: block;
+    object-fit: cover;
+    border: 3px solid var(--bg0);
+  }
+  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
   .hero h1 {
-    font-size: clamp(2.2rem, 6vw, 3.6rem);
-    font-weight: 800; letter-spacing: 1px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+    position: relative;
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    font-weight: 800; letter-spacing: 2px; line-height: 1.15;
+    background: linear-gradient(90deg, #8fb8ff, var(--accent2), #5eead4, #8fb8ff);
     background-size: 300% 100%;
     -webkit-background-clip: text; background-clip: text;
     -webkit-text-fill-color: transparent; color: transparent;
     animation: flow 8s linear infinite;
+    text-shadow: none;
   }
   @keyframes flow { 0% { background-position: 0% 0; } 100% { background-position: 300% 0; } }
-  .hero .sub { color: var(--muted); font-size: 1.05rem; margin: 14px auto 20px; min-height: 1.8em; max-width: 640px; }
+  .hero .sub {
+    position: relative;
+    color: var(--muted); font-size: 1.12rem; margin: 18px auto 26px;
+    min-height: 1.8em; max-width: 680px;
+  }
   .hero .sub .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--accent); vertical-align: -0.2em; margin-left: 2px; animation: blink .8s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
-  .stats { display: inline-flex; gap: 18px; flex-wrap: wrap; justify-content: center; font-size: .9rem; color: var(--muted); }
-  .stats b { color: var(--accent); font-variant-numeric: tabular-nums; }
-  .stats .sep { opacity: .35; }
+  .cta { position: relative; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 40px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 28px; border-radius: 999px;
+    font-size: .95rem; font-weight: 600; text-decoration: none;
+    transition: transform .2s, box-shadow .2s, background .2s;
+  }
+  .btn svg { width: 16px; height: 16px; fill: currentColor; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    color: #0a0c1e;
+    box-shadow: 0 6px 24px rgba(110,168,255,.35);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 34px rgba(110,168,255,.5); }
+  .btn-ghost {
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    background: rgba(18,22,44,.5);
+    backdrop-filter: blur(8px);
+  }
+  .btn-ghost:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: 0 8px 24px rgba(110,168,255,.15); }
+  .stats {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 0;
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    background: rgba(10,13,31,.55);
+    backdrop-filter: blur(12px);
+    padding: 16px 8px;
+    box-shadow: 0 10px 40px rgba(0,0,0,.4);
+  }
+  .stat { padding: 0 30px; text-align: center; }
+  .stat + .stat { border-left: 1px solid rgba(120,140,255,.12); }
+  .stat .num { font-size: 1.7rem; font-weight: 800; color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+  .stat .lbl { font-size: .78rem; color: var(--muted); margin-top: 2px; letter-spacing: 2px; }
+  @media (max-width: 640px) {
+    .hero { padding: 56px 0 40px; }
+    .stat { padding: 0 16px; }
+    .stat .num { font-size: 1.3rem; }
+  }
+
+  /* ============ Section ============ */
+  .section { margin-top: 56px; }
+  .sec-head { text-align: center; margin-bottom: 30px; }
+  .sec-label {
+    display: inline-block;
+    font-size: .72rem; font-weight: 700; letter-spacing: 4px;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border: 1px solid rgba(110,168,255,.3);
+    border-radius: 999px;
+    background: rgba(110,168,255,.06);
+    margin-bottom: 12px;
+  }
+  .sec-head h2 { font-size: clamp(1.5rem, 3.5vw, 2.1rem); font-weight: 700; letter-spacing: 1px; }
+  .sec-head .sec-sub { color: var(--muted); font-size: .95rem; margin-top: 8px; }
 
   /* ============ 卡片 ============ */
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 22px; margin-top: 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 24px; }
   .card {
     background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: var(--radius);
-    padding: 24px 22px 20px;
+    padding: 26px 24px 20px;
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     position: relative;
     transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-    opacity: 1;
   }
-  html.js .card { opacity: 0; transform: translateY(18px); }
+  html.js .card { opacity: 0; transform: translateY(20px); }
   html.js .card.in { opacity: 1; transform: none; }
   .card { transition: opacity .6s ease, transform .6s ease; }
   .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     border-color: rgba(110,168,255,.45);
-    box-shadow: 0 12px 40px rgba(0,0,0,.45), 0 0 24px rgba(110,168,255,.12);
+    box-shadow: 0 16px 50px rgba(0,0,0,.5), 0 0 30px rgba(110,168,255,.12);
   }
   .card::before {
-    content: ""; position: absolute; top: 0; left: 18px; right: 18px; height: 1px;
+    content: "";
+    position: absolute; top: 0; left: 20px; right: 20px; height: 1px;
     background: linear-gradient(90deg, transparent, var(--accent), transparent);
     opacity: 0; transition: opacity .25s;
   }
-  .card:hover::before { opacity: .8; }
+  .card:hover::before { opacity: .9; }
 
-  .card-top { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .lang-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--lang, #888); box-shadow: 0 0 10px var(--lang, #888); flex-shrink: 0; }
-  .card h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: .3px; }
+  .card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .icon {
+    width: 48px; height: 48px; flex-shrink: 0;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    background: linear-gradient(135deg, rgba(110,168,255,.16), rgba(167,139,250,.1));
+    border: 1px solid rgba(120,140,255,.25);
+    box-shadow: 0 4px 16px rgba(110,168,255,.12);
+    transition: transform .25s;
+  }
+  .card:hover .icon { transform: scale(1.08) rotate(-4deg); }
+  .card h2 { font-size: 1.22rem; font-weight: 700; letter-spacing: .3px; line-height: 1.3; }
   .card h2 a { color: var(--text); text-decoration: none; }
   .card h2 a:hover { color: var(--accent); }
   .ver {
     margin-left: auto;
-    font-size: .78rem; font-weight: 700;
+    font-size: .76rem; font-weight: 700;
     padding: 3px 12px; border-radius: 999px;
     background: rgba(52,211,153,.12); color: var(--accent3);
     border: 1px solid rgba(52,211,153,.35);
@@ -110,17 +210,33 @@
     white-space: nowrap;
   }
   .ver.loading { color: var(--muted); border-color: var(--card-border); background: rgba(120,140,255,.06); }
-  .desc { color: #c3c8e8; font-size: .92rem; margin-bottom: 14px; min-height: 3.4em; }
-  .meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: .82rem; color: var(--muted); margin-bottom: 14px; }
+  .desc { color: #c3c8e8; font-size: .92rem; margin-bottom: 16px; min-height: 3.2em; }
+  .meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: .82rem; color: var(--muted); margin-bottom: 16px; }
   .meta b { color: var(--text); font-variant-numeric: tabular-nums; }
-  .links { display: flex; gap: 16px; flex-wrap: wrap; font-size: .85rem; border-top: 1px solid rgba(120,140,255,.1); padding-top: 12px; }
+  .langbar { height: 4px; border-radius: 2px; overflow: hidden; background: rgba(120,140,255,.1); margin-bottom: 14px; display: flex; }
+  .langbar i { display: block; height: 100%; }
+  .links { display: flex; gap: 16px; flex-wrap: wrap; font-size: .85rem; border-top: 1px solid rgba(120,140,255,.1); padding-top: 14px; }
   .links a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
   .links a:hover { color: var(--accent2); text-shadow: 0 0 12px var(--glow); }
   .links a svg { width: 14px; height: 14px; fill: currentColor; }
 
   /* ghlink 安装源（可折叠） */
-  .install-details { margin: 4px 0 12px; border-radius: 12px; background: rgba(5,8,20,.6); border: 1px solid var(--card-border); overflow: hidden; }
-  .install-details summary { cursor: pointer; padding: 8px 14px; font-size: .8rem; color: var(--accent); list-style: none; user-select: none; transition: background .2s; }
+  .install-details {
+    margin: 2px 0 14px;
+    border-radius: 12px;
+    background: rgba(5,8,20,.6);
+    border: 1px solid var(--card-border);
+    overflow: hidden;
+  }
+  .install-details summary {
+    cursor: pointer;
+    padding: 8px 14px;
+    font-size: .8rem;
+    color: var(--accent);
+    list-style: none;
+    user-select: none;
+    transition: background .2s;
+  }
   .install-details summary:hover { background: rgba(110,168,255,.08); }
   .install-details summary::after { content: " ▾"; opacity: .6; }
   .install-details[open] summary::after { content: " ▴"; }
@@ -134,19 +250,47 @@
   .install-body { padding: 10px 14px; font-size: .8rem; }
   pre { white-space: pre-wrap; word-break: break-all; font-family: "Cascadia Code", Consolas, "Courier New", monospace; font-size: .78rem; color: #a5f3fc; }
 
-  .soon-card {
-    border-style: dashed; opacity: .75;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    text-align: center; color: var(--muted); min-height: 170px;
+  /* ============ About ============ */
+  .about-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 34px 30px;
+    backdrop-filter: blur(14px);
+    text-align: center;
+    max-width: 860px; margin: 0 auto;
   }
+  .about-card p { color: #c3c8e8; max-width: 720px; margin: 0 auto; font-size: .97rem; }
+  .tags { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 22px; }
+  .tag {
+    font-size: .8rem;
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(120,140,255,.2);
+    background: rgba(110,168,255,.06);
+    color: #c9d2f5;
+    transition: border-color .2s, color .2s, transform .2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-  footer { text-align: center; color: var(--muted); padding: 46px 0 10px; font-size: .8rem; }
+  footer { text-align: center; color: var(--muted); padding: 56px 0 10px; font-size: .82rem; }
   footer a { color: var(--muted); }
   footer a:hover { color: var(--accent); }
+  .top-btn {
+    position: fixed; right: 26px; bottom: 26px; z-index: 5;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(18,22,44,.8); border: 1px solid var(--card-border);
+    color: var(--accent); font-size: 1.1rem; cursor: pointer;
+    backdrop-filter: blur(10px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s, transform .2s;
+  }
+  .top-btn.show { opacity: 1; pointer-events: auto; }
+  .top-btn:hover { transform: translateY(-3px); border-color: var(--accent); }
 
   @media (max-width: 640px) {
-    .wrap { padding: 24px 14px 40px; }
-    .hero { padding: 36px 0 28px; }
+    .wrap { padding: 0 14px 40px; }
+    .grid { grid-template-columns: 1fr; }
     .desc { min-height: 0; }
   }
 </style>
@@ -155,180 +299,237 @@
 <canvas id="bg"></canvas>
 <div class="wrap">
 
+  <!-- ================= Hero ================= -->
   <header class="hero">
-    <div class="logo">L</div>
+    <div class="avatar">
+      <img src="https://avatars.githubusercontent.com/liwmj?s=200" alt="liwmj" onerror="this.style.display='none';this.nextSibling.style.display='flex';">
+      <span style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:2.4rem;font-weight:800;color:var(--accent);background:#0d1024;border-radius:50%;">L</span>
+    </div>
     <h1>佳的开源代码</h1>
     <p class="sub" id="typewriter"><span id="tw-text"></span><span class="cursor"></span></p>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/liwmj" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub 主页</a>
+      <a class="btn btn-ghost" href="https://github.com/liwmj?tab=repositories" target="_blank" rel="noopener">全部仓库 →</a>
+    </div>
     <div class="stats">
-      <span>项目 <b id="stat-repos">6</b></span><span class="sep">·</span>
-      <span>总 Star <b id="stat-stars">—</b></span><span class="sep">·</span>
-      <span>全平台 · 持续维护</span>
+      <div class="stat"><div class="num" id="stat-repos">6</div><div class="lbl">PROJECTS</div></div>
+      <div class="stat"><div class="num" id="stat-stars">0</div><div class="lbl">STARS</div></div>
+      <div class="stat"><div class="num" id="stat-forks">0</div><div class="lbl">FORKS</div></div>
+      <div class="stat"><div class="num" id="stat-releases">—</div><div class="lbl">RELEASES</div></div>
     </div>
   </header>
 
-  <main class="grid">
+  <!-- ================= 实用工具 ================= -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-label">Tools</span>
+      <h2>⚡ 实用工具</h2>
+      <p class="sec-sub">让日常开发与 AI 工作流更顺手的工程利器</p>
+    </div>
+    <div class="grid">
 
-    <!-- ============ ghlink ============ -->
-    <article class="card" data-repo="ghlink" data-fallback-ver="v0.4.15" data-lang="Python" style="--lang:#3572A5;">
-      <div class="card-top">
-        <span class="lang-dot"></span>
-        <h2><a href="https://github.com/liwmj/ghlink" target="_blank" rel="noopener">🔗 ghlink</a></h2>
-        <span class="ver" id="ver-ghlink">v0.4.15</span>
-      </div>
-      <p class="desc">GitHub 链路自愈工具：主动探测 GitHub 连通性，网络异常时自动获取可用 IP 写入 hosts，无感恢复访问；内置自检回滚与多渠道告警，跨平台（Windows / macOS / Linux）零依赖。</p>
-      <div class="meta">
-        <span>⭐ <b id="stars-ghlink">1</b></span>
-        <span>⑂ <b id="forks-ghlink">0</b></span>
-        <span>🕒 <b id="pushed-ghlink">—</b></span>
-        <span>Python</span>
-      </div>
-      <details class="install-details">
-        <div class="install-tab">
-          <button class="active" data-os="mac">🍎 macOS / Homebrew</button>
-          <button data-os="linux">🐧 Linux / apt</button>
-          <button data-os="win">🪟 Windows</button>
+      <article class="card" data-repo="ghlink" data-fallback-ver="v0.4.15" data-lang="Python">
+        <div class="card-top">
+          <div class="icon">🔗</div>
+          <h2><a href="https://github.com/liwmj/ghlink" target="_blank" rel="noopener">ghlink</a></h2>
+          <span class="ver" id="ver-ghlink">v0.4.15</span>
         </div>
-        <div class="install-body">
-          <pre id="install-mac">brew tap liwmj/tap
+        <p class="desc">GitHub 链路自愈工具：主动探测连通性，网络异常时自动获取可用 IP 写入 hosts，无感恢复访问；内置自检回滚与多渠道告警，跨平台零依赖。</p>
+        <div class="langbar"><i style="width:100%;background:#3572A5"></i></div>
+        <div class="meta">
+          <span>⭐ <b id="stars-ghlink">1</b></span>
+          <span>⑂ <b id="forks-ghlink">0</b></span>
+          <span>🕒 <b id="pushed-ghlink">—</b></span>
+          <span>Python</span>
+        </div>
+        <details class="install-details">
+          <summary>📦 安装方式</summary>
+          <div class="install-tab">
+            <button class="active" data-os="mac">🍎 macOS / Homebrew</button>
+            <button data-os="linux">🐧 Linux / apt</button>
+            <button data-os="win">🪟 Windows</button>
+          </div>
+          <div class="install-body">
+            <pre id="install-mac">brew tap liwmj/tap
 brew install ghlink</pre>
-          <pre id="install-linux" style="display:none">echo "deb https://liwmj.github.io/ghlink/apt/ ./" | sudo tee /etc/apt/sources.list.d/ghlink.list
+            <pre id="install-linux" style="display:none">echo "deb https://liwmj.github.io/ghlink/apt/ ./" | sudo tee /etc/apt/sources.list.d/ghlink.list
 sudo apt update
 sudo apt install ghlink</pre>
-          <pre id="install-win" style="display:none">下载 ghlink-installer-v0.4.15.exe 并运行（含托盘 GUI）</pre>
+            <pre id="install-win" style="display:none">下载 ghlink-installer-v0.4.15.exe 并运行（含托盘 GUI）</pre>
+          </div>
+        </details>
+        <div class="links">
+          <a href="https://github.com/liwmj/ghlink" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+          <a href="https://github.com/liwmj/ghlink/releases" target="_blank" rel="noopener" id="rel-ghlink">Release v0.4.15</a>
+          <a href="https://github.com/liwmj/ghlink/blob/master/README.md" target="_blank" rel="noopener">文档</a>
+          <a href="https://github.com/liwmj/ghlink/issues" target="_blank" rel="noopener">反馈</a>
         </div>
-      </details>
-      <div class="links">
-        <a href="https://github.com/liwmj/ghlink" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        <a href="https://github.com/liwmj/ghlink/releases" target="_blank" rel="noopener" id="rel-ghlink">Release v0.4.15</a>
-        <a href="https://github.com/liwmj/ghlink/blob/master/README.md" target="_blank" rel="noopener">文档</a>
-        <a href="https://github.com/liwmj/ghlink/issues" target="_blank" rel="noopener">反馈</a>
-      </div>
-    </article>
+      </article>
 
-    <!-- ============ openclaw-gh-sync ============ -->
-    <article class="card" data-repo="openclaw-gh-sync" data-fallback-ver="v0.6.22" data-lang="TypeScript" style="--lang:#3178C6;">
-      <div class="card-top">
-        <span class="lang-dot"></span>
-        <h2><a href="https://github.com/liwmj/openclaw-gh-sync" target="_blank" rel="noopener">🔄 openclaw-gh-sync</a></h2>
-        <span class="ver" id="ver-openclaw-gh-sync">v0.6.22</span>
-      </div>
-      <p class="desc">OpenClaw 实时 GitHub 同步插件：多设备工作区双向同步、定时备份存档、跨设备迁移恢复。AI 助手工作区的数据保险栓，配置一次即自动守护。</p>
-      <div class="meta">
-        <span>⭐ <b id="stars-openclaw-gh-sync">1</b></span>
-        <span>⑂ <b id="forks-openclaw-gh-sync">0</b></span>
-        <span>🕒 <b id="pushed-openclaw-gh-sync">—</b></span>
-        <span>TypeScript</span>
-      </div>
-      <div class="links">
-        <a href="https://github.com/liwmj/openclaw-gh-sync" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        <a href="https://github.com/liwmj/openclaw-gh-sync/releases" target="_blank" rel="noopener" id="rel-openclaw-gh-sync">Release v0.6.22</a>
-        <a href="https://github.com/liwmj/openclaw-gh-sync/blob/master/README.md" target="_blank" rel="noopener">文档</a>
-      </div>
-    </article>
+      <article class="card" data-repo="openclaw-gh-sync" data-fallback-ver="v0.6.22" data-lang="TypeScript">
+        <div class="card-top">
+          <div class="icon">🔄</div>
+          <h2><a href="https://github.com/liwmj/openclaw-gh-sync" target="_blank" rel="noopener">openclaw-gh-sync</a></h2>
+          <span class="ver" id="ver-openclaw-gh-sync">v0.6.22</span>
+        </div>
+        <p class="desc">OpenClaw 实时 GitHub 同步插件：多设备工作区双向同步、定时备份存档、跨设备迁移恢复。AI 助手工作区的数据保险栓，配置一次即自动守护。</p>
+        <div class="langbar"><i style="width:100%;background:#3178C6"></i></div>
+        <div class="meta">
+          <span>⭐ <b id="stars-openclaw-gh-sync">1</b></span>
+          <span>⑂ <b id="forks-openclaw-gh-sync">0</b></span>
+          <span>🕒 <b id="pushed-openclaw-gh-sync">—</b></span>
+          <span>TypeScript</span>
+        </div>
+        <div class="links">
+          <a href="https://github.com/liwmj/openclaw-gh-sync" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+          <a href="https://github.com/liwmj/openclaw-gh-sync/releases" target="_blank" rel="noopener" id="rel-openclaw-gh-sync">Release v0.6.22</a>
+          <a href="https://github.com/liwmj/openclaw-gh-sync/blob/master/README.md" target="_blank" rel="noopener">文档</a>
+        </div>
+      </article>
 
-    <!-- ============ GreenLeaf ============ -->
-    <article class="card" data-repo="GreenLeaf" data-fallback-ver="开发版" data-lang="C++" style="--lang:#f34b7d;">
-      <div class="card-top">
-        <span class="lang-dot"></span>
-        <h2><a href="https://github.com/liwmj/GreenLeaf" target="_blank" rel="noopener">🌿 GreenLeaf</a></h2>
-        <span class="ver" id="ver-GreenLeaf">开发版</span>
-      </div>
-      <p class="desc">GreenLeaf（绿叶）——分布式通用型服务器端开发框架。让服务端开发回归简单，重性能与可伸缩性：即时通讯服务端天生强伸缩，实测登录单机 30 万并发；支持 Python 混合编程与业务热更新，完美跨平台。</p>
-      <div class="meta">
-        <span>⭐ <b id="stars-GreenLeaf">19</b></span>
-        <span>⑂ <b id="forks-GreenLeaf">17</b></span>
-        <span>🕒 <b id="pushed-GreenLeaf">—</b></span>
-        <span>C++</span>
-      </div>
-      <div class="links">
-        <a href="https://github.com/liwmj/GreenLeaf" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        <a href="https://github.com/liwmj/GreenLeaf/blob/master/README.md" target="_blank" rel="noopener">文档</a>
-      </div>
-    </article>
-
-    <!-- ============ green_pythoncpp ============ -->
-    <article class="card" data-repo="green_pythoncpp" data-fallback-ver="v1.1.5" data-lang="C++" style="--lang:#f34b7d;">
-      <div class="card-top">
-        <span class="lang-dot"></span>
-        <h2><a href="https://github.com/liwmj/green_pythoncpp" target="_blank" rel="noopener">🐍 green_pythoncpp</a></h2>
-        <span class="ver" id="ver-green_pythoncpp">v1.1.5</span>
-      </div>
-      <p class="desc">Python 嵌入 C++ 的 Header-only 封装库：轻松调用 Python 函数、读写脚本变量、用 C++ 静态函数与类扩展 Python，异常双向传递。轻量、高效、即插即用（支持 Python 2.5 ~ 2.7）。</p>
-      <div class="meta">
-        <span>⭐ <b id="stars-green_pythoncpp">3</b></span>
-        <span>⑂ <b id="forks-green_pythoncpp">2</b></span>
-        <span>🕒 <b id="pushed-green_pythoncpp">—</b></span>
-        <span>C++</span>
-      </div>
-      <div class="links">
-        <a href="https://github.com/liwmj/green_pythoncpp" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        <a href="https://github.com/liwmj/green_pythoncpp/releases" target="_blank" rel="noopener" id="rel-green_pythoncpp">Release v1.1.5</a>
-        <a href="https://github.com/liwmj/green_pythoncpp/blob/master/README.md" target="_blank" rel="noopener">文档</a>
-      </div>
-    </article>
-
-    <!-- ============ green_luacpp ============ -->
-    <article class="card" data-repo="green_luacpp" data-fallback-ver="v1.1.5" data-lang="C++" style="--lang:#f34b7d;">
-      <div class="card-top">
-        <span class="lang-dot"></span>
-        <h2><a href="https://github.com/liwmj/green_luacpp" target="_blank" rel="noopener">🌙 green_luacpp</a></h2>
-        <span class="ver" id="ver-green_luacpp">v1.1.5</span>
-      </div>
-      <p class="desc">Lua 嵌入 C++ 的 Header-only 封装库：调用 Lua 函数、读写全局变量、注册 C++ 类与静态函数到 Lua，异常双向传递。极简 API，高效清洁（支持 Lua 5.1 / 5.2）。</p>
-      <div class="meta">
-        <span>⭐ <b id="stars-green_luacpp">3</b></span>
-        <span>⑂ <b id="forks-green_luacpp">4</b></span>
-        <span>🕒 <b id="pushed-green_luacpp">—</b></span>
-        <span>C++</span>
-      </div>
-      <div class="links">
-        <a href="https://github.com/liwmj/green_luacpp" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        <a href="https://github.com/liwmj/green_luacpp/releases" target="_blank" rel="noopener" id="rel-green_luacpp">Release v1.1.5</a>
-        <a href="https://github.com/liwmj/green_luacpp/blob/master/README.md" target="_blank" rel="noopener">文档</a>
-      </div>
-    </article>
-
-    <!-- ============ green_vim_switchtoinc ============ -->
-    <article class="card" data-repo="green_vim_switchtoinc" data-fallback-ver="v1.0.3" data-lang="Vim script" style="--lang:#199f4b;">
-      <div class="card-top">
-        <span class="lang-dot"></span>
-        <h2><a href="https://github.com/liwmj/green_vim_switchtoinc" target="_blank" rel="noopener">📝 green_vim_switchtoinc</a></h2>
-        <span class="ver" id="ver-green_vim_switchtoinc">v1.0.3</span>
-      </div>
-      <p class="desc">Vim 头文件 / 源文件一键切换插件（基于 a.vim 增强）：支持 C/C++/Objective-C 等多语言，绝对路径与相对路径查找、regex 路径替换、项目目录批量初始化，让 .h ↔ .cpp 切换如丝般顺滑。</p>
-      <div class="meta">
-        <span>⭐ <b id="stars-green_vim_switchtoinc">2</b></span>
-        <span>⑂ <b id="forks-green_vim_switchtoinc">1</b></span>
-        <span>🕒 <b id="pushed-green_vim_switchtoinc">—</b></span>
-        <span>Vim script</span>
-      </div>
-      <div class="links">
-        <a href="https://github.com/liwmj/green_vim_switchtoinc" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
-        <a href="https://github.com/liwmj/green_vim_switchtoinc/releases" target="_blank" rel="noopener" id="rel-green_vim_switchtoinc">Release v1.0.3</a>
-        <a href="https://github.com/liwmj/green_vim_switchtoinc/blob/master/README.md" target="_blank" rel="noopener">文档</a>
-      </div>
-    </article>
-
-    <div class="card soon-card">
-      <div style="font-size:1.6rem;margin-bottom:6px">🚀</div>
-      <div>更多项目 · 敬请期待</div>
-      <div style="font-size:.82rem;margin-top:4px">新项目将在此持续上架</div>
     </div>
+  </section>
 
-  </main>
+  <!-- ================= 框架与嵌入 ================= -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-label">Frameworks &amp; Embedding</span>
+      <h2>⚙️ 框架与嵌入</h2>
+      <p class="sec-sub">高性能服务端框架与脚本语言无缝嵌入方案</p>
+    </div>
+    <div class="grid">
+
+      <article class="card" data-repo="GreenLeaf" data-fallback-ver="开发版" data-lang="C++">
+        <div class="card-top">
+          <div class="icon">🌿</div>
+          <h2><a href="https://github.com/liwmj/GreenLeaf" target="_blank" rel="noopener">GreenLeaf 绿叶</a></h2>
+          <span class="ver" id="ver-GreenLeaf">开发版</span>
+        </div>
+        <p class="desc">分布式通用型服务器端开发框架。让服务端开发回归简单，重性能与可伸缩性：即时通讯服务端天生强伸缩，实测登录单机 30 万并发；支持 Python 混合编程与业务热更新，完美跨平台。</p>
+        <div class="langbar"><i style="width:100%;background:#f34b7d"></i></div>
+        <div class="meta">
+          <span>⭐ <b id="stars-GreenLeaf">19</b></span>
+          <span>⑂ <b id="forks-GreenLeaf">17</b></span>
+          <span>🕒 <b id="pushed-GreenLeaf">—</b></span>
+          <span>C++</span>
+        </div>
+        <div class="links">
+          <a href="https://github.com/liwmj/GreenLeaf" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+          <a href="https://github.com/liwmj/GreenLeaf/blob/master/README.md" target="_blank" rel="noopener">文档</a>
+        </div>
+      </article>
+
+      <article class="card" data-repo="green_pythoncpp" data-fallback-ver="v1.1.5" data-lang="C++">
+        <div class="card-top">
+          <div class="icon">🐍</div>
+          <h2><a href="https://github.com/liwmj/green_pythoncpp" target="_blank" rel="noopener">green_pythoncpp</a></h2>
+          <span class="ver" id="ver-green_pythoncpp">v1.1.5</span>
+        </div>
+        <p class="desc">Python 嵌入 C++ 的 Header-only 封装库：轻松调用 Python 函数、读写脚本变量、用 C++ 静态函数与类扩展 Python，异常双向传递。轻量、高效、即插即用。</p>
+        <div class="langbar"><i style="width:100%;background:#f34b7d"></i></div>
+        <div class="meta">
+          <span>⭐ <b id="stars-green_pythoncpp">3</b></span>
+          <span>⑂ <b id="forks-green_pythoncpp">2</b></span>
+          <span>🕒 <b id="pushed-green_pythoncpp">—</b></span>
+          <span>C++</span>
+        </div>
+        <div class="links">
+          <a href="https://github.com/liwmj/green_pythoncpp" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+          <a href="https://github.com/liwmj/green_pythoncpp/releases" target="_blank" rel="noopener" id="rel-green_pythoncpp">Release v1.1.5</a>
+          <a href="https://github.com/liwmj/green_pythoncpp/blob/master/README.md" target="_blank" rel="noopener">文档</a>
+        </div>
+      </article>
+
+      <article class="card" data-repo="green_luacpp" data-fallback-ver="v1.1.5" data-lang="C++">
+        <div class="card-top">
+          <div class="icon">🌙</div>
+          <h2><a href="https://github.com/liwmj/green_luacpp" target="_blank" rel="noopener">green_luacpp</a></h2>
+          <span class="ver" id="ver-green_luacpp">v1.1.5</span>
+        </div>
+        <p class="desc">Lua 嵌入 C++ 的 Header-only 封装库：调用 Lua 函数、读写全局变量、注册 C++ 类与静态函数到 Lua，异常双向传递。极简 API，高效清洁，游戏脚本集成首选。</p>
+        <div class="langbar"><i style="width:100%;background:#f34b7d"></i></div>
+        <div class="meta">
+          <span>⭐ <b id="stars-green_luacpp">3</b></span>
+          <span>⑂ <b id="forks-green_luacpp">4</b></span>
+          <span>🕒 <b id="pushed-green_luacpp">—</b></span>
+          <span>C++</span>
+        </div>
+        <div class="links">
+          <a href="https://github.com/liwmj/green_luacpp" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+          <a href="https://github.com/liwmj/green_luacpp/releases" target="_blank" rel="noopener" id="rel-green_luacpp">Release v1.1.5</a>
+          <a href="https://github.com/liwmj/green_luacpp/blob/master/README.md" target="_blank" rel="noopener">文档</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= 开发插件 ================= -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-label">Editor Plugins</span>
+      <h2>🧩 开发插件</h2>
+      <p class="sec-sub">打磨编辑器体验，让编码更流畅</p>
+    </div>
+    <div class="grid">
+
+      <article class="card" data-repo="green_vim_switchtoinc" data-fallback-ver="v1.0.3" data-lang="Vim script">
+        <div class="card-top">
+          <div class="icon">📝</div>
+          <h2><a href="https://github.com/liwmj/green_vim_switchtoinc" target="_blank" rel="noopener">green_vim_switchtoinc</a></h2>
+          <span class="ver" id="ver-green_vim_switchtoinc">v1.0.3</span>
+        </div>
+        <p class="desc">Vim 头文件 / 源文件一键切换插件（基于 a.vim 增强）：支持 C/C++/Objective-C 等多语言，绝对路径与相对路径查找、regex 路径替换、项目目录批量初始化，让 .h ↔ .cpp 切换如丝般顺滑。</p>
+        <div class="langbar"><i style="width:100%;background:#199f4b"></i></div>
+        <div class="meta">
+          <span>⭐ <b id="stars-green_vim_switchtoinc">2</b></span>
+          <span>⑂ <b id="forks-green_vim_switchtoinc">1</b></span>
+          <span>🕒 <b id="pushed-green_vim_switchtoinc">—</b></span>
+          <span>Vim script</span>
+        </div>
+        <div class="links">
+          <a href="https://github.com/liwmj/green_vim_switchtoinc" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
+          <a href="https://github.com/liwmj/green_vim_switchtoinc/releases" target="_blank" rel="noopener" id="rel-green_vim_switchtoinc">Release v1.0.3</a>
+          <a href="https://github.com/liwmj/green_vim_switchtoinc/blob/master/README.md" target="_blank" rel="noopener">文档</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ================= 关于 ================= -->
+  <section class="section">
+    <div class="sec-head">
+      <span class="sec-label">About</span>
+      <h2>💡 关于</h2>
+    </div>
+    <div class="about-card">
+      <p>这里汇集了佳的开源实践：从网络自愈工具、AI 工作区同步，到服务端框架与脚本语言嵌入库。坚持实用主义，注重性能与跨平台，每个项目都经过真实场景打磨。欢迎 Star、Issue 与 PR。</p>
+      <div class="tags">
+        <span class="tag">GitHub 链路优化</span>
+        <span class="tag">OpenClaw 生态</span>
+        <span class="tag">C++ 服务端</span>
+        <span class="tag">Lua / Python 嵌入</span>
+        <span class="tag">Vim 效率</span>
+        <span class="tag">跨平台发布</span>
+      </div>
+    </div>
+  </section>
 
   <footer>
     <a href="https://github.com/liwmj" target="_blank" rel="noopener">GitHub: liwmj</a> ·
-    © 2026 liwmj · GitHub Pages 静态分发 · 版本号实时同步
+    © 2026 佳 · GitHub Pages 静态分发 · 版本号实时同步
   </footer>
 </div>
+
+<button class="top-btn" id="topBtn" title="回到顶部">↑</button>
 
 <script>
 /* ============ 版本号 / 项目信息动态同步（GitHub API） ============
    未认证限流 60 次/时/IP：6 仓库 × 2 请求 = 12 次/刷新，localStorage 缓存 20 分钟
    API 失败时回退到页面内置 fallback 版本号，永不空白 */
 (function () {
-  var CACHE_KEY = 'liwmj-ghapi-v1';
+  var CACHE_KEY = 'lwapi-cache-v2';
   var TTL = 20 * 60 * 1000;
   var GITHUB = 'https://github.com/liwmj/';
   var API = 'https://api.github.com/repos/liwmj/';
@@ -371,7 +572,6 @@ sudo apt install ghlink</pre>
         relEl.href = GITHUB + name + '/releases/tag/' + release.tag_name;
       }
     }
-    // ghlink 专属：Windows 安装包版本同步
     if (name === 'ghlink' && release && release.tag_name) {
       var win = $('install-win');
       if (win) win.textContent = '下载 ghlink-installer-' + release.tag_name + '.exe 并运行（含托盘 GUI）';
@@ -381,11 +581,10 @@ sudo apt install ghlink</pre>
     var data = force ? null : cacheGet();
     if (data) {
       repos.forEach(function (r) { applyRepo(r, data[r].info, data[r].release); });
-      updateStars(data);
+      updateStats(data);
       return;
     }
     var out = {};
-    // 先标记加载中，避免误读旧版本号
     cards.forEach(function (c) { var v = $('ver-' + c.getAttribute('data-repo')); if (v) v.classList.add('loading'); });
     await Promise.all(repos.map(function (name) {
       return Promise.all([
@@ -395,19 +594,36 @@ sudo apt install ghlink</pre>
     }));
     cacheSet(out);
     repos.forEach(function (r) { applyRepo(r, out[r].info, out[r].release); });
-    updateStars(out);
+    updateStats(out);
   }
-  function updateStars(data) {
-    var total = 0, n = 0;
+  function updateStats(data) {
+    var stars = 0, forks = 0, releases = 0, n = 0;
     repos.forEach(function (r) {
-      var s = data[r] && data[r].info ? data[r].info.stargazers_count : null;
-      if (s != null) { total += s; n++; }
+      var d = data[r] || {};
+      if (d.info) {
+        if (d.info.stargazers_count != null) { stars += d.info.stargazers_count; n++; }
+        if (d.info.forks_count != null) forks += d.info.forks_count;
+      }
+      if (d.release && d.release.tag_name) releases++;
     });
-    var el = $('stat-stars');
-    if (el && n > 0) el.textContent = total;
+    if (n > 0) countUp($('stat-stars'), stars);
+    countUp($('stat-forks'), forks);
+    $('stat-releases').textContent = releases;
+  }
+  function countUp(el, target) {
+    if (!el) return;
+    var cur = 0, dur = 900, t0 = null;
+    function step(ts) {
+      if (!t0) t0 = ts;
+      var p = Math.min((ts - t0) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
   }
 
-    document.documentElement.classList.add('js');
+  document.documentElement.classList.add('js');
 
   /* ============ 打字机 ============ */
   var phrases = [
@@ -462,7 +678,7 @@ sudo apt install ghlink</pre>
     requestAnimationFrame(draw);
   })();
 
-  /* ============ 滚动渐入（视口内直接显示，其余 IO 监听） ============ */
+  /* ============ 滚动渐入 ============ */
   var io = null;
   if ('IntersectionObserver' in window) {
     io = new IntersectionObserver(function (es) {
@@ -474,6 +690,13 @@ sudo apt install ghlink</pre>
     if (r.top < innerHeight * .94 && r.bottom > 0) { c.classList.add('in'); return; }
     if (io) io.observe(c);
   });
+
+  /* ============ 返回顶部 ============ */
+  var topBtn = $('topBtn');
+  addEventListener('scroll', function () {
+    topBtn.classList.toggle('show', scrollY > 600);
+  }, { passive: true });
+  topBtn.addEventListener('click', function () { scrollTo({ top: 0, behavior: 'smooth' }); });
 
   /* ============ ghlink 安装 tab ============ */
   document.querySelectorAll('.install-tab button').forEach(function (btn) {
