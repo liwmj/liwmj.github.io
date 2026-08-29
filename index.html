@@ -185,7 +185,7 @@
   }
   .card:hover::before { opacity: .9; }
 
-  .card-top { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; row-gap: 8px; }
+  .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; min-width: 0; }
   .icon {
     width: 48px; height: 48px; flex-shrink: 0;
     border-radius: 14px;
@@ -197,11 +197,10 @@
     transition: transform .25s;
   }
   .card:hover .icon { transform: scale(1.08) rotate(-4deg); }
-  .card h2 { font-size: 1.22rem; font-weight: 700; letter-spacing: .3px; line-height: 1.3; flex: 1 0 auto; min-width: 0; white-space: nowrap; overflow: hidden; }
+  .card h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: .3px; line-height: 1.3; flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .card h2 a { color: var(--text); text-decoration: none; white-space: nowrap; }
   .card h2 a:hover { color: var(--accent); }
   .ver {
-    margin-left: auto;
     font-size: .76rem; font-weight: 700;
     padding: 3px 12px; border-radius: 999px;
     background: rgba(52,211,153,.12); color: var(--accent3);
@@ -211,6 +210,15 @@
     flex-shrink: 0;
   }
   .ver.loading { color: var(--muted); border-color: var(--card-border); background: rgba(120,140,255,.06); }
+  .badges { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; row-gap: 6px; margin-bottom: 12px; }
+  .lang-tag {
+    font-size: .72rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 999px;
+    background: rgba(110,168,255,.1); color: var(--accent);
+    border: 1px solid rgba(110,168,255,.25);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
   .desc { color: #c3c8e8; font-size: .92rem; margin-bottom: 16px; min-height: 3.2em; overflow-wrap: break-word; }
   .meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: .82rem; color: var(--muted); margin-bottom: 16px; }
   .meta b { color: var(--text); font-variant-numeric: tabular-nums; }
@@ -330,10 +338,13 @@
     <div class="grid">
 
       <article class="card" data-repo="ghlink" data-fallback-ver="v0.5.15" data-lang="Python">
-        <div class="card-top">
+        <div class="card-head">
           <div class="icon">🔗</div>
           <h2><a href="https://github.com/liwmj/ghlink" target="_blank" rel="noopener">ghlink</a></h2>
+        </div>
+        <div class="badges">
           <span class="ver" id="ver-ghlink">v0.5.15</span>
+          <span class="lang-tag">Python</span>
         </div>
         <p class="desc">GitHub 链路自愈工具：主动探测连通性，网络异常时自动获取可用 IP 写入 hosts，无感恢复访问；内置自检回滚与多渠道告警，跨平台零依赖。</p>
         <div class="langbar"><i style="width:100%;background:#3572A5"></i></div>
@@ -341,7 +352,6 @@
           <span>⭐ <b id="stars-ghlink">1</b></span>
           <span>⑂ <b id="forks-ghlink">0</b></span>
           <span>🕒 <b id="pushed-ghlink">—</b></span>
-          <span>Python</span>
         </div>
         <details class="install-details">
           <summary>📦 安装方式</summary>
@@ -368,10 +378,13 @@ sudo apt install ghlink</pre>
       </article>
 
       <article class="card" data-repo="openclaw-gh-sync" data-fallback-ver="v0.6.22" data-lang="TypeScript">
-        <div class="card-top">
+        <div class="card-head">
           <div class="icon">🔄</div>
           <h2><a href="https://github.com/liwmj/openclaw-gh-sync" target="_blank" rel="noopener">openclaw-gh-sync</a></h2>
+        </div>
+        <div class="badges">
           <span class="ver" id="ver-openclaw-gh-sync">v0.6.22</span>
+          <span class="lang-tag">TypeScript</span>
         </div>
         <p class="desc">OpenClaw 实时 GitHub 同步插件：多设备工作区双向同步、定时备份存档、跨设备迁移恢复。AI 助手工作区的数据保险栓，配置一次即自动守护。</p>
         <div class="langbar"><i style="width:100%;background:#3178C6"></i></div>
@@ -379,7 +392,6 @@ sudo apt install ghlink</pre>
           <span>⭐ <b id="stars-openclaw-gh-sync">1</b></span>
           <span>⑂ <b id="forks-openclaw-gh-sync">0</b></span>
           <span>🕒 <b id="pushed-openclaw-gh-sync">—</b></span>
-          <span>TypeScript</span>
         </div>
         <div class="links">
           <a href="https://github.com/liwmj/openclaw-gh-sync" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
@@ -401,10 +413,13 @@ sudo apt install ghlink</pre>
     <div class="grid">
 
       <article class="card" data-repo="GreenLeaf" data-fallback-ver="v1.0.1" data-lang="C++">
-        <div class="card-top">
+        <div class="card-head">
           <div class="icon">🌿</div>
           <h2><a href="https://github.com/liwmj/GreenLeaf" target="_blank" rel="noopener">GreenLeaf 绿叶</a></h2>
+        </div>
+        <div class="badges">
           <span class="ver" id="ver-GreenLeaf">v1.0.1</span>
+          <span class="lang-tag">C++</span>
         </div>
         <p class="desc">分布式通用型服务器端开发框架。让服务端开发回归简单，重性能与可伸缩性：即时通讯服务端天生强伸缩，实测登录单机 30 万并发；支持 Python 混合编程与业务热更新，完美跨平台。</p>
         <div class="langbar"><i style="width:100%;background:#f34b7d"></i></div>
@@ -412,7 +427,6 @@ sudo apt install ghlink</pre>
           <span>⭐ <b id="stars-GreenLeaf">19</b></span>
           <span>⑂ <b id="forks-GreenLeaf">17</b></span>
           <span>🕒 <b id="pushed-GreenLeaf">—</b></span>
-          <span>C++</span>
         </div>
         <div class="links">
           <a href="https://github.com/liwmj/GreenLeaf" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
@@ -421,10 +435,13 @@ sudo apt install ghlink</pre>
       </article>
 
       <article class="card" data-repo="green_pythoncpp" data-fallback-ver="v1.1.5" data-lang="C++">
-        <div class="card-top">
+        <div class="card-head">
           <div class="icon">🐍</div>
           <h2><a href="https://github.com/liwmj/green_pythoncpp" target="_blank" rel="noopener">green_pythoncpp</a></h2>
+        </div>
+        <div class="badges">
           <span class="ver" id="ver-green_pythoncpp">v1.1.5</span>
+          <span class="lang-tag">C++</span>
         </div>
         <p class="desc">Python 嵌入 C++ 的 Header-only 封装库：轻松调用 Python 函数、读写脚本变量、用 C++ 静态函数与类扩展 Python，异常双向传递。轻量、高效、即插即用。</p>
         <div class="langbar"><i style="width:100%;background:#f34b7d"></i></div>
@@ -432,7 +449,6 @@ sudo apt install ghlink</pre>
           <span>⭐ <b id="stars-green_pythoncpp">3</b></span>
           <span>⑂ <b id="forks-green_pythoncpp">2</b></span>
           <span>🕒 <b id="pushed-green_pythoncpp">—</b></span>
-          <span>C++</span>
         </div>
         <div class="links">
           <a href="https://github.com/liwmj/green_pythoncpp" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
@@ -442,10 +458,13 @@ sudo apt install ghlink</pre>
       </article>
 
       <article class="card" data-repo="green_luacpp" data-fallback-ver="v1.1.5" data-lang="C++">
-        <div class="card-top">
+        <div class="card-head">
           <div class="icon">🌙</div>
           <h2><a href="https://github.com/liwmj/green_luacpp" target="_blank" rel="noopener">green_luacpp</a></h2>
+        </div>
+        <div class="badges">
           <span class="ver" id="ver-green_luacpp">v1.1.5</span>
+          <span class="lang-tag">C++</span>
         </div>
         <p class="desc">Lua 嵌入 C++ 的 Header-only 封装库：调用 Lua 函数、读写全局变量、注册 C++ 类与静态函数到 Lua，异常双向传递。极简 API，高效清洁，游戏脚本集成首选。</p>
         <div class="langbar"><i style="width:100%;background:#f34b7d"></i></div>
@@ -453,7 +472,6 @@ sudo apt install ghlink</pre>
           <span>⭐ <b id="stars-green_luacpp">3</b></span>
           <span>⑂ <b id="forks-green_luacpp">4</b></span>
           <span>🕒 <b id="pushed-green_luacpp">—</b></span>
-          <span>C++</span>
         </div>
         <div class="links">
           <a href="https://github.com/liwmj/green_luacpp" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
@@ -475,10 +493,13 @@ sudo apt install ghlink</pre>
     <div class="grid">
 
       <article class="card" data-repo="green_vim_switchtoinc" data-fallback-ver="v1.0.3" data-lang="Vim script">
-        <div class="card-top">
+        <div class="card-head">
           <div class="icon">📝</div>
           <h2><a href="https://github.com/liwmj/green_vim_switchtoinc" target="_blank" rel="noopener">green_vim_switchtoinc</a></h2>
+        </div>
+        <div class="badges">
           <span class="ver" id="ver-green_vim_switchtoinc">v1.0.3</span>
+          <span class="lang-tag">Vim script</span>
         </div>
         <p class="desc">Vim 头文件 / 源文件一键切换插件（基于 a.vim 增强）：支持 C/C++/Objective-C 等多语言，绝对路径与相对路径查找、regex 路径替换、项目目录批量初始化，让 .h ↔ .cpp 切换如丝般顺滑。</p>
         <div class="langbar"><i style="width:100%;background:#199f4b"></i></div>
@@ -486,7 +507,6 @@ sudo apt install ghlink</pre>
           <span>⭐ <b id="stars-green_vim_switchtoinc">2</b></span>
           <span>⑂ <b id="forks-green_vim_switchtoinc">1</b></span>
           <span>🕒 <b id="pushed-green_vim_switchtoinc">—</b></span>
-          <span>Vim script</span>
         </div>
         <div class="links">
           <a href="https://github.com/liwmj/green_vim_switchtoinc" target="_blank" rel="noopener"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a>
