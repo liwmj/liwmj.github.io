@@ -322,9 +322,9 @@
     </div>
     <div class="stats">
       <div class="stat"><div class="num" id="stat-repos">6</div><div class="lbl">PROJECTS</div></div>
-      <div class="stat"><div class="num" id="stat-stars">0</div><div class="lbl">STARS</div></div>
-      <div class="stat"><div class="num" id="stat-forks">0</div><div class="lbl">FORKS</div></div>
-      <div class="stat"><div class="num" id="stat-releases">—</div><div class="lbl">RELEASES</div></div>
+      <div class="stat"><div class="num" id="stat-stars">29</div><div class="lbl">STARS</div></div>
+      <div class="stat"><div class="num" id="stat-forks">24</div><div class="lbl">FORKS</div></div>
+      <div class="stat"><div class="num" id="stat-releases">91</div><div class="lbl">RELEASES</div></div>
     </div>
   </header>
 
@@ -546,11 +546,12 @@ sudo apt install ghlink</pre>
 <button class="top-btn" id="topBtn" title="回到顶部">↑</button>
 
 <script>
-/* ============ 版本号 / 项目信息动态同步（GitHub API + jsDelivr 双源） ============
-   主源 GitHub API（releases/latest）；限流/不可达或仓库无 Release 时，回退 jsDelivr 数据接口取最新 tag；
-   再失败才用页面内置 fallback 版本号，永不空白。localStorage 缓存 20 分钟。 */
+/* ============ 版本号 / 统计字段动态同步（GitHub API + jsDelivr 双源） ============
+   版本：GitHub API releases/latest 主源，限流/不可达或无 Release 时回退 jsDelivr 取最新 tag；
+   统计：STARS/FORKS 取 repo 接口，RELEASES 取 releases 分页总数，PROJECTS 取页面项目数；
+   API 全挂时回退旧缓存/内置真实值，永不归零。localStorage 缓存 20 分钟。 */
 (function () {
-  var CACHE_KEY = 'lwapi-cache-v3';
+  var CACHE_KEY = 'lwapi-cache-v4';
   var TTL = 20 * 60 * 1000;
   var GITHUB = 'https://github.com/liwmj/';
   var API = 'https://api.github.com/repos/liwmj/';
@@ -564,8 +565,7 @@ sudo apt install ghlink</pre>
       var raw = localStorage.getItem(CACHE_KEY);
       if (!raw) return null;
       var o = JSON.parse(raw);
-      if (Date.now() - o.ts > TTL) return null;
-      return o.data;
+      return { data: o.data, stale: Date.now() - o.ts > TTL };
     } catch (e) { return null; }
   }
   function cacheSet(data) {
@@ -586,6 +586,19 @@ sudo apt install ghlink</pre>
         return null;
       })
       .catch(function () { return null; });
+  }
+  function fetchRelCount(name) {
+    return fetch(API + name + '/releases?per_page=1', { headers: { 'Accept': 'application/vnd.github+json' } })
+      .then(function (r) { return r.ok ? r : null; })
+      .then(function (r) {
+        if (!r) return 0;
+        var link = '';
+        try { link = r.headers.get('Link') || ''; } catch (e) {}
+        var m = link.match(/[?&]page=(\d+)>;\s*rel="last"/);
+        if (m) return parseInt(m[1], 10);
+        return r.json().then(function (arr) { return Array.isArray(arr) ? arr.length : 0; });
+      })
+      .catch(function () { return 0; });
   }
   function applyRepo(name, info, release, tag) {
     var el;
@@ -612,10 +625,10 @@ sudo apt install ghlink</pre>
     }
   }
   async function refreshAll(force) {
-    var data = force ? null : cacheGet();
-    if (data) {
-      repos.forEach(function (r) { applyRepo(r, data[r].info, data[r].release, data[r].tag); });
-      updateStats(data);
+    var cached = force ? null : cacheGet();
+    if (cached && !cached.stale) {
+      repos.forEach(function (r) { applyRepo(r, cached.data[r].info, cached.data[r].release, cached.data[r].tag); });
+      updateStats(cached.data);
       return;
     }
     var out = {};
@@ -623,14 +636,17 @@ sudo apt install ghlink</pre>
     await Promise.all(repos.map(function (name) {
       return Promise.all([
         fetch(API + name, { headers: { 'Accept': 'application/vnd.github+json' } }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
-        fetch(API + name + '/releases/latest', { headers: { 'Accept': 'application/vnd.github+json' } }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+        fetch(API + name + '/releases/latest', { headers: { 'Accept': 'application/vnd.github+json' } }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }),
+        fetchRelCount(name)
       ]).then(function (res) {
-        var info = res[0], release = res[1];
+        var info = res[0], release = res[1], relCount = res[2];
         var tag = (release && release.tag_name) ? release.tag_name : null;
-        if (tag) return { info: info, release: release, tag: tag };
-        return fetchJsdelivrTag(name).then(function (t) { return { info: info, release: release, tag: t }; });
+        if (tag) return { info: info, release: release, tag: tag, relCount: relCount };
+        return fetchJsdelivrTag(name).then(function (t) { return { info: info, release: release, tag: t, relCount: relCount }; });
       }).then(function (d) { out[name] = d; });
     }));
+    var any = repos.some(function (n) { var d = out[n]; return d && (d.info || d.tag); });
+    if (!any && cached) { out = cached.data; } // 全源失败：回退旧缓存，避免统计归零
     cacheSet(out);
     repos.forEach(function (r) { applyRepo(r, out[r].info, out[r].release, out[r].tag); });
     updateStats(out);
@@ -643,11 +659,16 @@ sudo apt install ghlink</pre>
         if (d.info.stargazers_count != null) { stars += d.info.stargazers_count; n++; }
         if (d.info.forks_count != null) forks += d.info.forks_count;
       }
-      if (d.release && d.release.tag_name) releases++;
+      if (d.relCount) releases += d.relCount;
     });
-    if (n > 0) countUp($('stat-stars'), stars);
-    countUp($('stat-forks'), forks);
-    $('stat-releases').textContent = releases;
+    var reposEl = $('stat-repos');
+    if (reposEl) reposEl.textContent = cards.length; // PROJECTS = 页面项目数（动态）
+    if (n > 0) { // 仅在拿到真实数据时更新，失败时保留初始/缓存值，不归零
+      countUp($('stat-stars'), stars);
+      countUp($('stat-forks'), forks);
+    }
+    var relEl = $('stat-releases');
+    if (relEl && releases > 0) relEl.textContent = releases;
   }
   function countUp(el, target) {
     if (!el) return;
