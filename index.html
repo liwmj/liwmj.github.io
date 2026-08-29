@@ -530,7 +530,7 @@ sudo apt install ghlink</pre>
    主源 GitHub API（releases/latest）；限流/不可达或仓库无 Release 时，回退 jsDelivr 数据接口取最新 tag；
    再失败才用页面内置 fallback 版本号，永不空白。localStorage 缓存 20 分钟。 */
 (function () {
-  var CACHE_KEY = 'lwapi-cache-v2';
+  var CACHE_KEY = 'lwapi-cache-v3';
   var TTL = 20 * 60 * 1000;
   var GITHUB = 'https://github.com/liwmj/';
   var API = 'https://api.github.com/repos/liwmj/';
