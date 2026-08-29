@@ -539,7 +539,7 @@ sudo apt install ghlink</pre>
 
   <footer>
     <a href="https://github.com/liwmj" target="_blank" rel="noopener">GitHub: liwmj</a> ·
-    © 2026 佳 · GitHub Pages 静态分发 · 版本号实时同步
+    © <span id="year">2026</span> 佳 · GitHub Pages 静态分发 · 版本号实时同步
   </footer>
 </div>
 
@@ -771,6 +771,8 @@ sudo apt install ghlink</pre>
   });
 
   /* ============ 启动 ============ */
+  var yearEl = $('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
   refreshAll(false);
 })();
 </script>
